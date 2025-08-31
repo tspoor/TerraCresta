@@ -62,10 +62,14 @@ module emu
     output        VGA_F1,
     output [2:0]  VGA_SL,
     output        VGA_SCALER, // Force VGA scaler
+    output        VGA_DISABLE, // analog out is off
+    
 
     input  [11:0] HDMI_WIDTH,
     input  [11:0] HDMI_HEIGHT,
     output        HDMI_FREEZE,
+    output        HDMI_BLACKOUT,
+    output        HDMI_BOB_DEINT,
 
 `ifdef MISTER_FB
     // Use framebuffer in DDRAM (USE_FB=1 in qsf)
@@ -1440,7 +1444,7 @@ dual_port_ram #(.LEN(4096)) ram4kx8_H (
     .address_a ( m68k_a[12:1] ),
     .wren_a ( !m68k_rw & m68k_ram_cs & !m68k_uds_n ),
     .data_a ( m68k_dout[15:8]  ),
-    .q_a (  ram68k_dout[15:8] ),
+    .q_a (  ram68k_dout[15:8] )
     );
 
 // main 68k ram low     
